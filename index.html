@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#60733e" />
+    <meta name="description" content="C A N Badminton Smash & Share 2026" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <link rel="icon" href="can-logo.jpg" type="image/jpeg" />
+    <link rel="apple-touch-icon" href="can-logo.jpg" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>C A N Badminton Smash &amp; Share 2026</title>
+  </head>
+  <body>
+    <div class="aurora a1"></div><div class="aurora a2"></div><div class="shuttle-bg">🏸</div>
+    <main class="app-shell">
+      <header class="topbar glass">
+        <a class="brand" href="#home" aria-label="Trang chủ C A N Badminton">
+          <img src="can-logo.jpg" alt="Logo C A N Badminton" /><span><strong>C A N</strong><small>Badminton</small></span>
+        </a>
+        <div class="top-actions"><button class="icon-btn" id="installBtn" aria-label="Cài ứng dụng" title="Cài ứng dụng">⇩</button><button class="avatar" aria-label="Tài khoản">CN</button></div>
+      </header>
+
+      <section id="home" class="hero-poster glass"><img src="can-banner.jpg" alt="C A N Badminton Smash & Share 2026" /><div class="poster-tag">Giao lưu gây quỹ thiện nguyện</div></section>
+
+      <section class="quick-grid" aria-label="Tác vụ nhanh">
+        <button class="quick-card match" data-open="match"><span>🏸</span><strong>Ghi trận đấu</strong><small>Thêm kết quả mới</small></button>
+        <button class="quick-card fund" data-open="donation"><span>♥</span><strong>Ghi quyên góp</strong><small>Đóng góp hôm nay</small></button>
+        <button class="quick-card history" data-jump="history"><span>◷</span><strong>Lịch sử</strong><small>Xem &amp; chỉnh sửa</small></button>
+      </section>
+
+      <section class="section-head"><div><p class="eyebrow">HÔM NAY</p><h2>Tổng quan ngày <span id="todayLabel"></span></h2></div><button class="date-chip" id="datePicker">▣ <span id="dateText"></span></button></section>
+      <section class="metrics">
+        <article class="metric-card glass"><div class="metric-icon blue">🏸</div><div><p>Trận đấu diễn ra</p><strong id="matchCount">0</strong><small>trận trong ngày</small></div><span class="metric-arrow">›</span></article>
+        <article class="metric-card glass"><div class="metric-icon pink">♥</div><div><p>Quỹ quyên góp</p><strong id="donationTotal">0 ₫</strong><small>tổng đóng góp hôm nay</small></div><span class="metric-arrow">›</span></article>
+      </section>
+
+      <section id="history" class="history-section glass"><div class="section-head compact"><div><p class="eyebrow">HOẠT ĐỘNG GẦN ĐÂY</p><h2>Nhật ký chung</h2></div><button class="text-btn" id="refreshBtn">Làm mới</button></div><div id="activityList" class="activity-list"></div><button class="see-all" id="loadMoreBtn">Xem lịch sử theo ngày <span>→</span></button></section>
+    </main>
+
+    <nav class="bottom-nav glass" aria-label="Điều hướng"><a class="active" href="#home">⌂<span>Trang chủ</span></a><a href="#history">◷<span>Lịch sử</span></a><button data-open="match" aria-label="Thêm dữ liệu">+</button><a href="#stats">▥<span>Thống kê</span></a><a href="#settings">⚙<span>Khác</span></a></nav>
+
+    <dialog id="entryModal" class="entry-modal"><form id="entryForm" method="dialog"><button class="modal-close" value="cancel" aria-label="Đóng">×</button><div id="formContent"></div><button class="submit-btn" value="default">Lưu thông tin <span>→</span></button></form></dialog>
+    <input id="hiddenDate" type="date" aria-label="Chọn ngày" />
+    <template id="matchForm"><p class="eyebrow">THÊM MỚI</p><h2>Ghi nhận trận đấu</h2><label>Ngày thi đấu<input name="date" type="date" required /></label><label>Người chơi / Đội<input name="players" placeholder="VD: Minh – Long vs Nam – Huy" required /></label><label>Kết quả<input name="score" placeholder="VD: 21–18, 19–21, 21–16" required /></label><label>Ghi chú <textarea name="note" placeholder="Nội dung thêm (không bắt buộc)"></textarea></label></template>
+    <template id="donationForm"><p class="eyebrow">THÊM MỚI</p><h2>Ghi nhận quyên góp</h2><label>Ngày đóng góp<input name="date" type="date" required /></label><label>Người đóng góp<input name="donor" placeholder="Họ và tên / nhóm" required /></label><label>Số tiền (VNĐ)<input name="amount" type="number" min="1000" step="1000" placeholder="VD: 100000" required /></label><label>Lời nhắn <textarea name="note" placeholder="Nội dung thêm (không bắt buộc)"></textarea></label></template>
+    <script src="app.js"></script>
+  </body>
+</html>
