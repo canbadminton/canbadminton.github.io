@@ -3,47 +3,115 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#60733e" />
-    <meta name="description" content="C A N Badminton Smash & Share 2026" />
+    <meta name="theme-color" content="#527a3d" />
+    <meta name="description" content="Quản lý giao lưu, trận đấu và quỹ thiện nguyện C A N Badminton." />
+    <meta name="color-scheme" content="light" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="can-logo.jpg" type="image/jpeg" />
     <link rel="apple-touch-icon" href="can-logo.jpg" />
     <link rel="stylesheet" href="styles.css" />
-    <title>C A N Badminton Smash &amp; Share 2026</title>
+    <title>C A N Badminton · Smash &amp; Share 2026</title>
   </head>
   <body>
-    <div class="aurora a1"></div><div class="aurora a2"></div><div class="shuttle-bg">🏸</div>
     <main class="app-shell">
-      <header class="topbar glass">
+      <header class="topbar">
         <a class="brand" href="#home" aria-label="Trang chủ C A N Badminton">
-          <img src="can-logo.jpg" alt="Logo C A N Badminton" /><span><strong>C A N</strong><small>Badminton</small></span>
+          <img src="can-logo.jpg" alt="Logo C A N Badminton" />
+          <span><strong>C A N</strong><small>BADMINTON</small></span>
         </a>
-        <div class="top-actions"><button class="icon-btn" id="installBtn" aria-label="Cài ứng dụng" title="Cài ứng dụng">⇩</button><button class="avatar" aria-label="Tài khoản">CN</button></div>
+        <div class="top-actions">
+          <button class="icon-button" id="installBtn" type="button" aria-label="Cài ứng dụng" title="Cài ứng dụng" hidden>⇩</button>
+          <button class="avatar" id="managerBtn" type="button" aria-label="Thông tin người quản lý">QL</button>
+        </div>
       </header>
 
-      <section id="home" class="hero-poster glass"><img src="can-banner.jpg" alt="C A N Badminton Smash & Share 2026" /><div class="poster-tag">Giao lưu gây quỹ thiện nguyện</div></section>
+      <section id="home" class="hero-poster">
+        <img src="can-banner.jpg" alt="C A N Badminton Smash & Share 2026" />
+        <span class="poster-tag">Giao lưu gây quỹ thiện nguyện</span>
+      </section>
+
+      <section class="section-head date-head">
+        <div><p class="eyebrow">BẢNG ĐIỀU KHIỂN</p><h1>Tổng quan ngày</h1></div>
+        <label class="date-chip" for="selectedDate"><span aria-hidden="true">▣</span><input id="selectedDate" type="date" aria-label="Chọn ngày thi đấu" /></label>
+      </section>
+
+      <section class="metrics" aria-label="Tổng quan">
+        <article class="metric-card"><span class="metric-icon">🏸</span><div><small>Trận đấu</small><strong id="matchCount">0</strong></div></article>
+        <article class="metric-card"><span class="metric-icon heart">♥</span><div><small>Quỹ từ trận</small><strong id="matchFund">0 ₫</strong></div></article>
+        <article class="metric-card"><span class="metric-icon gift">♡</span><div><small>Quyên góp</small><strong id="donationTotal">0 ₫</strong></div></article>
+        <article class="metric-card total-card"><span class="metric-icon">◈</span><div><small>Tổng quỹ ngày</small><strong id="dayTotal">0 ₫</strong></div></article>
+      </section>
 
       <section class="quick-grid" aria-label="Tác vụ nhanh">
-        <button class="quick-card match" data-open="match"><span>🏸</span><strong>Ghi trận đấu</strong><small>Thêm kết quả mới</small></button>
-        <button class="quick-card fund" data-open="donation"><span>♥</span><strong>Ghi quyên góp</strong><small>Đóng góp hôm nay</small></button>
-        <button class="quick-card history" data-jump="history"><span>◷</span><strong>Lịch sử</strong><small>Xem &amp; chỉnh sửa</small></button>
+        <button class="quick-card" type="button" data-open="match"><span class="quick-icon court-icon">🏸</span><strong>Ghi trận đấu</strong><small>Nhập tỷ số, tính quỹ tự động</small></button>
+        <button class="quick-card" type="button" data-open="donation"><span class="quick-icon fund-icon">♥</span><strong>Ghi quyên góp</strong><small>Thêm khoản đóng góp</small></button>
+        <button class="quick-card" type="button" data-open="player"><span class="quick-icon people-icon">♙</span><strong>Đăng ký người chơi</strong><small>Quản lý danh sách theo ngày</small></button>
       </section>
 
-      <section class="section-head"><div><p class="eyebrow">HÔM NAY</p><h2>Tổng quan ngày <span id="todayLabel"></span></h2></div><button class="date-chip" id="datePicker">▣ <span id="dateText"></span></button></section>
-      <section class="metrics">
-        <article class="metric-card glass"><div class="metric-icon blue">🏸</div><div><p>Trận đấu diễn ra</p><strong id="matchCount">0</strong><small>trận trong ngày</small></div><span class="metric-arrow">›</span></article>
-        <article class="metric-card glass"><div class="metric-icon pink">♥</div><div><p>Quỹ quyên góp</p><strong id="donationTotal">0 ₫</strong><small>tổng đóng góp hôm nay</small></div><span class="metric-arrow">›</span></article>
+      <section class="panel">
+        <div class="section-head compact"><div><p class="eyebrow">HÔM NAY</p><h2>Hoạt động gần đây</h2></div><button class="text-button" data-tab="history">Xem lịch sử</button></div>
+        <div id="recentList" class="record-list"></div>
       </section>
 
-      <section id="history" class="history-section glass"><div class="section-head compact"><div><p class="eyebrow">HOẠT ĐỘNG GẦN ĐÂY</p><h2>Nhật ký chung</h2></div><button class="text-btn" id="refreshBtn">Làm mới</button></div><div id="activityList" class="activity-list"></div><button class="see-all" id="loadMoreBtn">Xem lịch sử theo ngày <span>→</span></button></section>
+      <section class="panel section-panel" id="tab-history" hidden>
+        <div class="section-head compact"><div><p class="eyebrow">GIAO DỊCH</p><h2>Lịch sử</h2></div><button class="text-button" id="historyDateBtn" type="button"></button></div>
+        <div class="filter-row"><button class="filter-chip active" data-filter="all">Tất cả</button><button class="filter-chip" data-filter="match">Trận đấu</button><button class="filter-chip" data-filter="donation">Quyên góp</button></div>
+        <div id="historyList" class="record-list"></div>
+      </section>
+
+      <section class="panel section-panel" id="tab-roster" hidden>
+        <div class="section-head compact"><div><p class="eyebrow">DANH SÁCH NGÀY</p><h2>Người chơi &amp; sân</h2></div><button class="text-button" data-open="player">Thêm người</button></div>
+        <div class="toolbar-row"><strong id="rosterCount">0 người</strong><button class="secondary-button" data-open="court">+ Thêm sân</button></div>
+        <div id="rosterList" class="record-list"></div>
+        <h3 class="subheading">Sân thi đấu</h3><div id="courtList" class="court-list"></div>
+      </section>
+
+      <section class="panel section-panel" id="tab-stats" hidden>
+        <div class="section-head compact"><div><p class="eyebrow">TỪ DỮ LIỆU CÒN HIỆU LỰC</p><h2>Thống kê ngày</h2></div></div>
+        <div class="stats-grid"><article><small>Trận đã ghi</small><strong id="statsMatches">0</strong></article><article><small>Khoản quyên góp</small><strong id="statsDonations">0</strong></article><article><small>Quỹ từ trận</small><strong id="statsMatchFund">0 ₫</strong></article><article><small>Tổng tiền ngày</small><strong id="statsTotal">0 ₫</strong></article></div>
+        <h3 class="subheading">Đóng góp theo hội / nhóm</h3><div id="clubStats" class="record-list"></div>
+        <h3 class="subheading">Đóng góp theo người chơi</h3><div id="playerStats" class="record-list"></div>
+      </section>
+
+      <section class="panel section-panel" id="tab-trash" hidden>
+        <div class="section-head compact"><div><p class="eyebrow">KHÔI PHỤC ĐƯỢC</p><h2>Thùng rác</h2></div></div>
+        <p class="helper-copy">Bản ghi trong thùng rác không tính vào tổng quỹ hoặc thống kê. Khôi phục sẽ đưa bản ghi trở lại.</p>
+        <div id="trashList" class="record-list"></div>
+      </section>
+
+      <section class="panel section-panel" id="tab-more" hidden>
+        <div class="section-head compact"><div><p class="eyebrow">DỮ LIỆU TRÊN THIẾT BỊ</p><h2>Khác</h2></div></div>
+        <div class="notice-card"><strong>Lưu ý về đồng bộ</strong><p>Dữ liệu chỉ nằm trong trình duyệt trên thiết bị này. Xuất bản sao lưu trước khi đổi máy hoặc xóa dữ liệu trình duyệt.</p></div>
+        <div class="settings-actions"><button class="secondary-button" data-tab="stats">Xem thống kê</button><button class="secondary-button" id="exportBtn">Xuất bản sao lưu</button><label class="secondary-button file-button">Nhập bản sao lưu<input id="importInput" type="file" accept="application/json,.json" /></label><button class="secondary-button" data-tab="trash">Mở thùng rác / khôi phục</button><button class="secondary-button" data-tab="audit">Xem nhật ký chung</button></div>
+        <h3 class="subheading">Đơn vị tính quỹ</h3><label class="field-label">1 điểm quy đổi<input id="unitAmount" type="number" min="1" step="100" value="1000" inputmode="numeric" /> <span>đồng</span></label>
+        <p class="helper-copy">Giao diện không có máy chủ xác thực; người dùng thiết bị này có thể truy cập dữ liệu và các thao tác quản lý.</p>
+      </section>
+
+      <section class="panel section-panel" id="tab-audit" hidden>
+        <div class="section-head compact"><div><p class="eyebrow">LỊCH SỬ THAO TÁC</p><h2>Nhật ký chung</h2></div></div>
+        <div id="auditList" class="record-list"></div>
+      </section>
     </main>
 
-    <nav class="bottom-nav glass" aria-label="Điều hướng"><a class="active" href="#home">⌂<span>Trang chủ</span></a><a href="#history">◷<span>Lịch sử</span></a><button data-open="match" aria-label="Thêm dữ liệu">+</button><a href="#stats">▥<span>Thống kê</span></a><a href="#settings">⚙<span>Khác</span></a></nav>
+    <nav class="bottom-nav" aria-label="Điều hướng chính">
+      <button class="nav-item active" data-tab="home"><span>⌂</span><small>Trang chủ</small></button>
+      <button class="nav-item" data-tab="history"><span>◷</span><small>Lịch sử</small></button>
+      <button class="nav-add" type="button" data-open="match" aria-label="Ghi trận mới">+</button>
+      <button class="nav-item" data-tab="roster"><span>♙</span><small>Người chơi</small></button>
+      <button class="nav-item" data-tab="more"><span>⋯</span><small>Khác</small></button>
+    </nav>
 
-    <dialog id="entryModal" class="entry-modal"><form id="entryForm" method="dialog"><button class="modal-close" value="cancel" aria-label="Đóng">×</button><div id="formContent"></div><button class="submit-btn" value="default">Lưu thông tin <span>→</span></button></form></dialog>
-    <input id="hiddenDate" type="date" aria-label="Chọn ngày" />
-    <template id="matchForm"><p class="eyebrow">THÊM MỚI</p><h2>Ghi nhận trận đấu</h2><label>Ngày thi đấu<input name="date" type="date" required /></label><label>Người chơi / Đội<input name="players" placeholder="VD: Minh – Long vs Nam – Huy" required /></label><label>Kết quả<input name="score" placeholder="VD: 21–18, 19–21, 21–16" required /></label><label>Ghi chú <textarea name="note" placeholder="Nội dung thêm (không bắt buộc)"></textarea></label></template>
-    <template id="donationForm"><p class="eyebrow">THÊM MỚI</p><h2>Ghi nhận quyên góp</h2><label>Ngày đóng góp<input name="date" type="date" required /></label><label>Người đóng góp<input name="donor" placeholder="Họ và tên / nhóm" required /></label><label>Số tiền (VNĐ)<input name="amount" type="number" min="1000" step="1000" placeholder="VD: 100000" required /></label><label>Lời nhắn <textarea name="note" placeholder="Nội dung thêm (không bắt buộc)"></textarea></label></template>
-    <script src="app.js"></script>
+    <dialog id="entryModal" class="modal"><form id="entryForm" class="modal-form">
+      <div class="modal-heading"><div><p class="eyebrow" id="formEyebrow">THÊM MỚI</p><h2 id="formTitle">Ghi trận đấu</h2></div><button class="close-button" type="button" data-close aria-label="Đóng">×</button></div>
+      <div id="formBody" class="form-body"></div>
+      <div id="previewBox" class="preview-box" hidden></div>
+      <div class="modal-actions"><button class="secondary-button" type="button" data-close>Hủy</button><button class="primary-button" id="saveBtn" type="submit">Lưu thông tin</button></div>
+    </form></dialog>
+
+    <dialog id="confirmModal" class="modal confirm-modal"><div class="modal-form"><div class="modal-heading"><div><p class="eyebrow">THÙNG RÁC</p><h2>Xóa bản ghi?</h2></div><button class="close-button" type="button" data-close aria-label="Đóng">×</button></div><p id="deleteSummary"></p><div class="modal-actions"><button class="secondary-button" type="button" data-close>Hủy</button><button class="danger-button" id="confirmDelete" type="button">Chuyển vào thùng rác</button></div></div></dialog>
+    <dialog id="managerModal" class="modal"><form id="managerForm" class="modal-form"><div class="modal-heading"><div><p class="eyebrow">NHẬT KÝ</p><h2>Thông tin quản lý</h2></div><button class="close-button" type="button" data-close aria-label="Đóng">×</button></div><label class="field-label">Tên người nhập<input name="manager" required maxlength="80" placeholder="Tên quản lý sân" /></label><div class="modal-actions"><button class="secondary-button" type="button" data-close>Hủy</button><button class="primary-button" type="submit">Lưu</button></div></form></dialog>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="app.js" defer></script>
   </body>
 </html>
+
