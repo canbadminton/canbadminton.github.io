@@ -1,4 +1,4 @@
-const CACHE = 'can-badminton-v8';
+const CACHE = 'can-badminton-v9';
 const FILES = ['./', './index.html', './styles.css', './app.js', './manifest.webmanifest', './can-logo.jpg', './can-banner.jpg'];
 self.addEventListener('install', event => event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(FILES)).then(() => self.skipWaiting())));
 self.addEventListener('activate', event => event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith('can-badminton-') && key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())));
