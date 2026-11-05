@@ -16,8 +16,7 @@ PWA chạy hoàn toàn trên GitHub Pages và không gọi API bên ngoài. Tệ
 
 Giá trị mặc định là 1 điểm = 1.000đ. Có thể đổi trong **Khác → Đơn vị tính quỹ**.
 
-- **Hai hội đấu trực tiếp:** mỗi người bên A đóng một nửa số điểm bên B × đơn vị; mỗi người bên B đóng một nửa số điểm bên A × đơn vị.
-- **Đánh đôi xen kẽ:** mỗi người đóng một nửa số điểm đội mình × đơn vị. Khi mỗi đội có một người của mỗi hội, tổng đóng góp của hai hội bằng nhau.
+- **Hai hội đấu trực tiếp và đánh đôi xen kẽ:** đội A đóng theo điểm đội B, đội B đóng theo điểm đội A; mỗi khoản chia đều cho hai thành viên của đội. Ví dụ A thắng 21–10: mỗi thành viên đội A đóng 5.000đ, mỗi thành viên đội B đóng 10.500đ nếu đơn vị là 1.000đ/điểm.
 - Tổng quỹ, thống kê hội và thống kê cá nhân được tính từ trận còn hiệu lực. Xóa mềm đưa bản ghi vào thùng rác; khôi phục tính bản ghi trở lại.
 
 ## Lưu trữ và quyền truy cập
