@@ -75,8 +75,8 @@ function contributionFor(match, unit = match.unitAmount || state.settings.unit |
   const b = Number(match.scoreB) || 0;
   const sideA = Array.isArray(match.teamA) ? match.teamA : [];
   const sideB = Array.isArray(match.teamB) ? match.teamB : [];
-  const factorA = match.matchMode === 'mixed' ? a : b;
-  const factorB = match.matchMode === 'mixed' ? b : a;
+  const factorA = b;
+  const factorB = a;
   const people = [
     ...sideA.map(player => ({ ...player, side: 'A', amount: factorA * unit / Math.max(sideA.length, 1) })),
     ...sideB.map(player => ({ ...player, side: 'B', amount: factorB * unit / Math.max(sideB.length, 1) }))
@@ -275,7 +275,7 @@ function openForm(kind, existing = null) {
         '<div class="team-card"><h3>Đội A · Điểm <input class="inline-score" name="scoreA" type="number" inputmode="numeric" min="0" step="1" required value="' + esc(existing?.scoreA ?? '') + '"></h3><div class="team-grid">' + [0,1].map(i => playerSelect('p' + (i+1), current[i])).join('') + '</div></div>' +
         '<div class="team-card"><h3>Đội B · Điểm <input class="inline-score" name="scoreB" type="number" inputmode="numeric" min="0" step="1" required value="' + esc(existing?.scoreB ?? '') + '"></h3><div class="team-grid">' + [2,3].map(i => playerSelect('p' + (i+1), current[i])).join('') + '</div></div>' +
         field('note', 'Ghi chú', 'text', existing?.note || '', 'maxlength="500"') +
-        '<p class="field-help full">Trực tiếp: mỗi bên đóng theo điểm đối phương. Xen kẽ: mỗi người đóng nửa điểm đội mình. 1 điểm = ' + fmtMoney(state.settings.unit || DEFAULT_UNIT) + '.</p>';
+        '<p class="field-help full">Mỗi đội đóng theo điểm của đội đối phương; khoản đóng được chia đều cho 2 thành viên. 1 điểm = ' + fmtMoney(state.settings.unit || DEFAULT_UNIT) + '.</p>';
       body.querySelector('[name="matchMode"]').value = defaultMode;
       body.querySelectorAll('select').forEach(select => select.addEventListener('change', paintPreview));
       body.querySelectorAll('input').forEach(input => input.addEventListener('input', paintPreview));
