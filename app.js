@@ -250,9 +250,25 @@ function openForm(kind, existing = null) {
     if (livePlayers(state.date).length < 4) {
       body.innerHTML = '<p class="field-help full">Cần đăng ký ít nhất 4 người cho ngày này trước khi ghi trận.</p><button type="button" class="secondary-button full" data-go-roster>Đến danh sách người chơi</button>';
     } else {
-      const playersById = Object.fromEntries(livePlayers(state.date).map(player => [player.id, player]));
+      const roster = livePlayers(state.date);
+      const playersById = Object.fromEntries(roster.map(player => [player.id, player]));
       const teams = existing ? [existing.teamA, existing.teamB] : [[],[]];
-      const current = [teams[0]?.[0]?.id, teams[0]?.[1]?.id, teams[1]?.[0]?.id, teams[1]?.[1]?.id];
+      let defaultMode = existing?.matchMode || 'direct';
+      let current = [teams[0]?.[0]?.id, teams[0]?.[1]?.id, teams[1]?.[0]?.id, teams[1]?.[1]?.id];
+      if (!existing) {
+        const clubs = [...new Set(roster.map(player => player.club || 'Chưa khai báo hội'))];
+        const groups = clubs.map(club => roster.filter(player => (player.club || 'Chưa khai báo hội') === club));
+        const directGroups = groups.filter(group => group.length >= 2);
+        if (directGroups.length >= 2) {
+          current = [directGroups[0][0].id, directGroups[0][1].id, directGroups[1][0].id, directGroups[1][1].id];
+        } else if (groups.length >= 2 && groups[0].length >= 2 && groups[1].length >= 2) {
+          current = [groups[0][0].id, groups[1][0].id, groups[0][1].id, groups[1][1].id];
+          defaultMode = 'mixed';
+        } else {
+          current = roster.slice(0, 4).map(player => player.id);
+          defaultMode = 'mixed';
+        }
+      }
       body.innerHTML =
         '<label class="field-label">Kiểu trận<select name="matchMode"><option value="direct">Hai hội đấu trực tiếp</option><option value="mixed">Đánh đôi xen kẽ</option></select></label>' +
         '<label class="field-label">Sân<select name="court" required>' + courtsForDate().map(court => '<option ' + (court === (existing?.court || DEFAULT_COURTS[0]) ? 'selected' : '') + '>' + esc(court) + '</option>').join('') + '</select></label>' +
@@ -260,7 +276,7 @@ function openForm(kind, existing = null) {
         '<div class="team-card"><h3>Đội B · Điểm <input class="inline-score" name="scoreB" type="number" inputmode="numeric" min="0" step="1" required value="' + esc(existing?.scoreB ?? '') + '"></h3><div class="team-grid">' + [2,3].map(i => playerSelect('p' + (i+1), current[i])).join('') + '</div></div>' +
         field('note', 'Ghi chú', 'text', existing?.note || '', 'maxlength="500"') +
         '<p class="field-help full">Trực tiếp: mỗi bên đóng theo điểm đối phương. Xen kẽ: mỗi người đóng nửa điểm đội mình. 1 điểm = ' + fmtMoney(state.settings.unit || DEFAULT_UNIT) + '.</p>';
-      body.querySelector('[name="matchMode"]').value = existing?.matchMode || 'direct';
+      body.querySelector('[name="matchMode"]').value = defaultMode;
       body.querySelectorAll('select').forEach(select => select.addEventListener('change', paintPreview));
       body.querySelectorAll('input').forEach(input => input.addEventListener('input', paintPreview));
     }
